@@ -1,0 +1,66 @@
+/* Styles personnalisés pour la navbar et taskbar */
+:root {
+    --primary-purple: #330066;
+    --orange-accent: #FF6600;
+    --light-purple: #6600CC;
+    --white: #FFFFFF;
+}
+
+/* Style pour les icônes de navigation */
+.nav-icon {
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.nav-icon:hover {
+    opacity: 1;
+}
+
+/* Ajustements de la navbar sticky */
+.sticky-top {
+    z-index: 1020;
+}
+
+.fixed-bottom {
+    z-index: 1030;
+}
+
+/* Responsive specifics */
+@media (max-width: 767.98px) {
+    /* Styles spécifiques pour la version mobile très petits écrans */
+    .navbar {
+        padding: 10px 0;
+    }
+}
+
+
+/* Ajout d'animation et d'interactions dans la navbar*/
+/* Enhanced nav icon styles */
+.nav-icon {
+    text-decoration: none;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 12px;
+    margin: 0 4px;
+}
+
+.nav-icon:hover {
+    opacity: 1;
+    background-color: rgba(255, 102, 0, 0.2); /* Soft orange background on hover */
+}
+
+.nav-icon:active, .nav-icon.active {
+    background-color: var(--orange-accent); /* Solid orange background when clicked/active */
+    opacity: 1;
+}
+
+.nav-icon img {
+    transition: transform 0.2s ease;
+}
+
+.nav-icon:active img {
+    transform: scale(0.9); /* Slight scale down effect when clicked */
+}
