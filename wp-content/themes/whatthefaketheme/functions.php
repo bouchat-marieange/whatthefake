@@ -166,6 +166,6 @@ add_action('send_headers', 'whatthefake_security_headers');
  * Modifications de l'interface d'administration WordPress
  */
 function whatthefake_admin_footer_text() {
-    echo 'Thème WhatTheFake développé avec ❤️ par Meryem Türköz & Marie-Ange Bouchat';
+    echo 'Thème WhatTheFake développé avec ❤️ par Marie-Ange Bouchat';
 }
 add_filter('admin_footer_text', 'whatthefake_admin_footer_text');
