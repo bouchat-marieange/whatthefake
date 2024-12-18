@@ -20,17 +20,19 @@ if (!defined('ABSPATH')) {
  */
 function whatthefake_setup() {
     // Activer la génération automatique des balises de titre
-    add_theme_support('title-tag');
+    add_theme_support('title-tag'); // support de mon title tag
 
     // Activer le support des images à la une
-    add_theme_support('post-thumbnails');
+    add_theme_support('post-thumbnails');// support du thumbnail sur mes articles
+
+    add_theme_support('menus'); // support des menus par notre thème
 
     // Définir les tailles d'images personnalisées
     add_image_size('blog-thumbnail', 350, 230, true);
     add_image_size('full-width-image', 1200, 600, true);
 
     // Enregistrer les emplacements de menu
-    register_nav_menus(array(
+    register_nav_menus(array( // permet d'enregistrer plusieurs barres de navigation.(register_nav_menu (au singulier, ne permet que d'enregistrer une bar de navigation )
         'main-menu'   => __('Menu Principal', 'whatthefake'),
         'footer-menu' => __('Menu Pied de Page', 'whatthefake')
     ));
@@ -69,7 +71,7 @@ function whatthefake_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'whatthefake_enqueue_scripts');
 
 /**
- * Walker de menu personnalisé pour supprimer les puces de liste
+ * Walker de menu personnalisé
  */
 class Custom_Nav_Walker extends Walker_Nav_Menu {
     function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {

@@ -9,7 +9,7 @@
 <?php wp_body_open(); ?>
 
 <header>
-    <!-- Navbar desktop (md et +, masquée en sm) -->
+    Navbar desktop (md et +, masquée en sm)
     <nav class="navbar navbar-expand-md navbar-light sticky-top d-none d-md-flex" style="background-color: #330066; height: 60px;">
         <div class="container-fluid">
             <!-- Logo long -->
@@ -20,7 +20,7 @@
             <!-- Bouton de navigation mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> 
 
             <!-- Menu de navigation avec icônes -->
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -34,12 +34,15 @@
                             // Déterminer l'icône en fonction du titre du menu
                             $icon = '';
                             switch (strtolower($item->title)) {
-                                case 'jeux':
+                                case 'challenge':
                                     $icon = 'Gamepad.svg';
                                     break;
                                 case 'ressources':
                                     $icon = 'Notes.svg';
                                     break;
+                                case 'bonus':
+                                    $icon = 'Bonus.svg';
+                                    break;    
                                 case 'classement':
                                     $icon = 'Cup.svg';
                                     break;
