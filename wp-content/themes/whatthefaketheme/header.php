@@ -9,7 +9,7 @@
 <?php wp_body_open(); ?>
 
 <header>
-    <!-- Navbar desktop (md et +, masquée en sm) -->
+    <!-- Navbar desktop (md et +) -->
     <nav class="navbar navbar-expand-md navbar-light sticky-top d-none d-md-flex" style="background-color: #330066; height: 60px;">
         <div class="container-fluid">
             <!-- Logo long -->
@@ -17,28 +17,29 @@
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_icones/logo_long.svg" alt="<?php bloginfo('name'); ?>" height="40">
             </a>
 
-            <!-- Bouton de navigation mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Menu de navigation avec icônes -->
+            <!-- Menu de navigation desktop avec icônes -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto d-flex align-items-center">
                     <?php 
                     // Récupération des éléments du menu principal
                     $current_page_id = get_queried_object_id();
                     $menu_items = wp_get_nav_menu_items('main-menu');
+
                     if ($menu_items) {
                         foreach ($menu_items as $item) {
-                            // Déterminer l'icône en fonction du titre du menu
                             $icon = '';
-                            switch (strtolower($item->title)) {
-                                case 'jeux':
+                            $original_title = strtolower($item->title);
+                            
+                            // Association des titres avec leurs icônes
+                            switch ($original_title) {
+                                case 'challenge':
                                     $icon = 'Gamepad.svg';
                                     break;
                                 case 'ressources':
                                     $icon = 'Notes.svg';
+                                    break;
+                                case 'bonus':
+                                    $icon = 'Bonus.svg';
                                     break;
                                 case 'classement':
                                     $icon = 'Cup.svg';
@@ -51,9 +52,9 @@
                                     break;
                             }
                             
-                            // Ajouter la classe 'active' si la page courante correspond à l'élément de menu
                             $is_active = ($current_page_id == $item->object_id) ? 'active' : '';
                             
+                            // Affichage de l'élément de menu
                             echo '<li class="nav-item">';
                             echo '<a href="' . esc_url($item->url) . '" class="nav-icon ' . $is_active . '">';
                             if ($icon) {
@@ -85,13 +86,30 @@
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_icones/logo_haut.svg" alt="<?php bloginfo('name'); ?>" height="30">
             </a>
 
-            <!-- Score en mobile -->
-            <div class="text-white">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_icones/coin.svg" alt="Points" height="20">
-                <span>0 pts</span>
+            <!-- Section droite avec score et profil -->
+            <div class="d-flex align-items-center">
+                <!-- Score en mobile -->
+                <div class="text-white me-3">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_icones/coin.svg" alt="Points" height="20">
+                    <span>0 pts</span>
+                </div>
+
+                <!-- Icône profil en mobile -->
+                <?php
+                if ($menu_items) {
+                    foreach ($menu_items as $item) {
+                        if (strtolower($item->title) === 'profil') {
+                            echo '<a href="' . esc_url($item->url) . '" class="nav-icon">';
+                            echo '<img src="' . get_template_directory_uri() . '/assets/img/logo_icones/User Rounded.svg" alt="Profil" height="24">';
+                            echo '</a>';
+                            break;
+                        }
+                    }
+                }
+                ?>
             </div>
         </div>
     </nav>
 </header>
 
-<main>
+<main></main>

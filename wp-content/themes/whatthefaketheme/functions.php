@@ -5,7 +5,7 @@
  * Ce fichier centralise toutes les configurations et fonctionnalités personnalisées du thème WordPress.
  * 
  * @package WhatTheFake
- * @author Marie-Ange Bouchat & Meryem Türköz
+ * @author Marie-Ange Bouchat
  */
 
 // Sécurité : Empêcher l'accès direct au fichier
@@ -20,17 +20,19 @@ if (!defined('ABSPATH')) {
  */
 function whatthefake_setup() {
     // Activer la génération automatique des balises de titre
-    add_theme_support('title-tag');
+    add_theme_support('title-tag'); // support de mon title tag
 
     // Activer le support des images à la une
-    add_theme_support('post-thumbnails');
+    add_theme_support('post-thumbnails');// support du thumbnail sur mes articles
+
+    add_theme_support('menus'); // support des menus par notre thème
 
     // Définir les tailles d'images personnalisées
     add_image_size('blog-thumbnail', 350, 230, true);
     add_image_size('full-width-image', 1200, 600, true);
 
     // Enregistrer les emplacements de menu
-    register_nav_menus(array(
+    register_nav_menus(array( // permet d'enregistrer plusieurs barres de navigation.(register_nav_menu (au singulier, ne permet que d'enregistrer une bar de navigation )
         'main-menu'   => __('Menu Principal', 'whatthefake'),
         'footer-menu' => __('Menu Pied de Page', 'whatthefake')
     ));
@@ -69,7 +71,7 @@ function whatthefake_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'whatthefake_enqueue_scripts');
 
 /**
- * Walker de menu personnalisé pour supprimer les puces de liste
+ * Walker de menu personnalisé
  */
 class Custom_Nav_Walker extends Walker_Nav_Menu {
     function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
@@ -169,3 +171,31 @@ function whatthefake_admin_footer_text() {
     echo 'Thème WhatTheFake développé avec ❤️ par Marie-Ange Bouchat';
 }
 add_filter('admin_footer_text', 'whatthefake_admin_footer_text');
+
+// Déboggage
+// Ajouter cette fonction à votre functions.php
+function debug_menu_to_log() {
+    // Vérifier si le menu existe
+    $menu_exists = wp_get_nav_menu_object('main-menu');
+    error_log('Menu principal existe : ' . ($menu_exists ? 'Oui' : 'Non'));
+    
+    // Récupérer les éléments du menu
+    $menu_items = wp_get_nav_menu_items('main-menu');
+    error_log('Nombre d\'éléments dans le menu : ' . ($menu_items ? count($menu_items) : '0'));
+    
+    if ($menu_items) {
+        foreach ($menu_items as $item) {
+            error_log('Élément de menu trouvé : ' . $item->title);
+            
+            // Vérifier le chemin des icônes
+            $icon_path = get_template_directory() . '/assets/img/logo_icones/';
+            error_log('Chemin des icônes : ' . $icon_path);
+            
+            // Vérifier les permissions du dossier
+            error_log('Permissions du dossier icônes : ' . decoct(fileperms($icon_path) & 0777));
+        }
+    }
+}
+
+// Ajouter l'action pour exécuter le débogage
+add_action('init', 'debug_menu_to_log');
