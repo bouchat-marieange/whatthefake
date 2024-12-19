@@ -5,7 +5,7 @@
  * Ce fichier centralise toutes les configurations et fonctionnalités personnalisées du thème WordPress.
  * 
  * @package WhatTheFake
- * @author Marie-Ange Bouchat & Meryem Türköz
+ * @author Marie-Ange Bouchat
  */
 
 // Sécurité : Empêcher l'accès direct au fichier
@@ -171,3 +171,31 @@ function whatthefake_admin_footer_text() {
     echo 'Thème WhatTheFake développé avec ❤️ par Marie-Ange Bouchat';
 }
 add_filter('admin_footer_text', 'whatthefake_admin_footer_text');
+
+// Déboggage
+// Ajouter cette fonction à votre functions.php
+function debug_menu_to_log() {
+    // Vérifier si le menu existe
+    $menu_exists = wp_get_nav_menu_object('main-menu');
+    error_log('Menu principal existe : ' . ($menu_exists ? 'Oui' : 'Non'));
+    
+    // Récupérer les éléments du menu
+    $menu_items = wp_get_nav_menu_items('main-menu');
+    error_log('Nombre d\'éléments dans le menu : ' . ($menu_items ? count($menu_items) : '0'));
+    
+    if ($menu_items) {
+        foreach ($menu_items as $item) {
+            error_log('Élément de menu trouvé : ' . $item->title);
+            
+            // Vérifier le chemin des icônes
+            $icon_path = get_template_directory() . '/assets/img/logo_icones/';
+            error_log('Chemin des icônes : ' . $icon_path);
+            
+            // Vérifier les permissions du dossier
+            error_log('Permissions du dossier icônes : ' . decoct(fileperms($icon_path) & 0777));
+        }
+    }
+}
+
+// Ajouter l'action pour exécuter le débogage
+add_action('init', 'debug_menu_to_log');
